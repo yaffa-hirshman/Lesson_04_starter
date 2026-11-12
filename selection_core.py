@@ -59,9 +59,6 @@ def submit_selection(event: dict, actor_id: str, media_ids: list, service_codes:
         "service_codes": list(service_codes),
     }
 
-    valid_media = _media_ids_of(event)
-    for m_id in media_ids:
-        if m_id not in valid_media:
-            raise SelectionError("MEDIA_NOT_IN_EVENT")
+
     selections.append(selection)
     return selection
