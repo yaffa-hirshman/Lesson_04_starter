@@ -39,4 +39,10 @@ def test_rejected_selection_leaves_event_unchanged(sample_event):
     original_count = len(sample_event.get("selections", []))
     with pytest.raises(selection_core.SelectionError):
         selection_core.submit_selection(sample_event, "cli_100", ["med_9"], ["add_to_album"])
-    assert len(sample_event.get("selections", [])) == original_count          
+    assert len(sample_event.get("selections", [])) == original_count
+
+@pytest.mark.req("REQ-SEL-06")
+def test_forbidden_actor_is_rejected(sample_event):
+    with pytest.raises(selection_core.SelectionError) as err:
+        selection_core.submit_selection(sample_event, "cli_200", ["med_1"], ["add_to_album"])
+    assert err.value.code == "FORBIDDEN"              
